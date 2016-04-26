@@ -36,40 +36,52 @@ word_data = []
 ### can iterate your modifications quicker
 temp_counter = 0
 
-
+'''
 for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
+        path = path.replace('/', '\\')
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
+        #temp_counter += 1
         if temp_counter < 200:
-            path = os.path.join('..', path[:-1])
+            #path = os.path.join('..', path[:-1])
+            path = os.path.join('C:\Users\\akshdeep.r\Documents\Machine Learning Udacity\ud120-projects', path[:-2])
             print path
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
-
+            text = parseOutText(email)
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
-
+            for word in ["sara", "shackleton", "chris", "germani"]:
+                text = text.replace(word, '')
             ### append the text to word_data
-
+            word_data.append(text)
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
+            if from_person == 'Sara':
+                from_data.append(0)
+            else:
+                from_data.append(1)
 
             email.close()
 
 print "emails processed"
+print word_data[152]
 from_sara.close()
 from_chris.close()
 
 pickle.dump( word_data, open("your_word_data.pkl", "w") )
 pickle.dump( from_data, open("your_email_authors.pkl", "w") )
+'''
 
-
-
-
-
+word_data = pickle.load(open("your_word_data.pkl",'r'))
 ### in Part 4, do TfIdf vectorization here
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(stop_words="english", lowercase=True)
+vectorizer.fit_transform(word_data)
 
+print "Unit 10-20: How many unique words are in your TfIdf?"
+vocab_list = vectorizer.get_feature_names()
+print len(vocab_list)
+print vocab_list[34597]
