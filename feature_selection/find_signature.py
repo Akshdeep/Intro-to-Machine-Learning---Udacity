@@ -36,8 +36,31 @@ features_train = features_train[:150].toarray()
 labels_train   = labels_train[:150]
 
 
-
 ### your code goes here
+from time import time
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+
+clf = tree.DecisionTreeClassifier()
+
+t0 = time()
+clf.fit(features_train, labels_train)
+print "training time:", round(time()-t0, 3), "s"
+
+t0 = time()
+pred = clf.predict(features_test)
+print "prediction time:", round(time()-t0, 3), "s"
+
+accuracy = accuracy_score(pred, labels_test)
+print(accuracy)
+
+print
 
 
+importances = clf.feature_importances_
+indices = numpy.argsort(importances)[::-1]
+for f in range(10):
+   print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
 
+feature_names = vectorizer.get_feature_names()
+print feature_names[14343]

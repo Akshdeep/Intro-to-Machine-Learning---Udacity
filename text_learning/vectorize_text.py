@@ -36,7 +36,7 @@ word_data = []
 ### can iterate your modifications quicker
 temp_counter = 0
 
-'''
+
 for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         path = path.replace('/', '\\')
@@ -53,15 +53,16 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             text = parseOutText(email)
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
-            for word in ["sara", "shackleton", "chris", "germani"]:
+            for word in ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]:
                 text = text.replace(word, '')
             ### append the text to word_data
             word_data.append(text)
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-            if from_person == 'Sara':
-                from_data.append(0)
+
+            if name == 'sara':
+                from_data.append("0")
             else:
-                from_data.append(1)
+                from_data.append("1")
 
             email.close()
 
@@ -72,9 +73,9 @@ from_chris.close()
 
 pickle.dump( word_data, open("your_word_data.pkl", "w") )
 pickle.dump( from_data, open("your_email_authors.pkl", "w") )
-'''
 
-word_data = pickle.load(open("your_word_data.pkl",'r'))
+
+#word_data = pickle.load(open("your_word_data.pkl",'r'))
 ### in Part 4, do TfIdf vectorization here
 
 from sklearn.feature_extraction.text import TfidfVectorizer
